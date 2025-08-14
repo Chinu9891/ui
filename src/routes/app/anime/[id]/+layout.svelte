@@ -57,6 +57,10 @@
     return 'bg-red-400 select:bg-red-500'
   }
 
+  function goBack () {
+    window.history.back();
+  }
+
   $: mediaId = media.id
   $: following = authAggregator.following(mediaId)
   $: followerEntries = $following?.data?.Page?.mediaList?.filter(e => e?.user?.id !== authAggregator.id()) ?? []
@@ -78,7 +82,8 @@
 
 <div class='min-w-0 -ml-14 pl-14 grow items-center flex flex-col h-full overflow-y-auto z-10 pointer-events-none pb-10' use:dragScroll on:scroll={handleScroll} bind:this={container} style:--custom={media.coverImage?.color ?? '#fff'} style:--red={r} style:--green={g} style:--blue={b}>
   <div class='gap-6 w-full pt-4 md:pt-32 flex flex-col items-center justify-center max-w-[1600px] px-3 xl:px-14 pointer-events-auto'>
-    <div class='flex flex-col md:flex-row w-full items-center md:items-end gap-5 pt-12'>
+    <div class='flex flex-col md:flex-row w-full items-center md:items-end gap-5 pt-12 relative'>
+      <button class="absolute top-0 left-0" on:click={goBack}>Go back</button>
       <Dialog.Root portal='#root'>
         <Dialog.Trigger class='shrink-0 w-[180px] h-[256px] rounded overflow-hidden relative group focus-visible:ring-1 focus-visible:ring-ring select:scale-[1.02] transition-transform duration-200'>
           <div class='absolute flex-center w-full h-full bg-black group-select:bg-opacity-50 bg-opacity-0 duration-300 text-white transition-all ease-out'>
