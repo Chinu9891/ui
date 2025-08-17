@@ -6,11 +6,12 @@
   import { onDestroy, tick } from 'svelte'
   import MagnifyingGlass from 'svelte-radix/MagnifyingGlass.svelte'
   import { toast } from 'svelte-sonner'
+
   import { genres, years, seasons, formats, status, sort, onlist } from './values'
 
   import type { Search } from '$lib/modules/anilist/queries'
-  import type { VariablesOf } from 'gql.tada'
   import type { Snapshot } from '../$types'
+  import type { VariablesOf } from 'gql.tada'
 
   import { replaceState } from '$app/navigation'
   import { page } from '$app/stores'
@@ -103,15 +104,15 @@
   export const snapshot: Snapshot = {
     capture: () => ({
       search: search,
-      inputText: inputText,
+      inputText: inputText
     }),
     restore: (value) => {
       if (value) {
-        search = value.search;
-        inputText = value.inputText;
+        search = value.search
+        inputText = value.inputText
       }
     }
-  };
+  }
 
   let pageNumber = 1
   let inputText = ''
@@ -137,7 +138,7 @@
     trace = undefined
   }
 
-  let media: Array<ReturnType<typeof client.search>> = [];
+  let media: Array<ReturnType<typeof client.search>> = []
 
   // these are required, because #each key re-renders when the array changes, this doesnt repaint the ui, but re-triggers any active subscriptions
   // and this re-runs the anilist queries as
@@ -147,9 +148,9 @@
 
   // handlers
 
-  function searchChanged(s: typeof search) {
-    pageNumber = 1;
-    media = [searchQuery(filterEmpty(s), 1)];
+  function searchChanged (s: typeof search) {
+    pageNumber = 1
+    media = [searchQuery(filterEmpty(s), 1)]
   }
 
   function searchQuery (filter: Partial<typeof search>, page: number) {
@@ -249,7 +250,7 @@
   let pressed = false
 </script>
 
-<div id="scroll" class='flex flex-col h-full overflow-y-auto overflow-x-clip -ml-14 pl-14 z-20 min-w-0 grow pointer-events-none' use:dragScroll use:infiniteScroll>
+<div id='scroll' class='flex flex-col h-full overflow-y-auto overflow-x-clip -ml-14 pl-14 z-20 min-w-0 grow pointer-events-none' use:dragScroll use:infiniteScroll>
   <div class='sticky top-0 z-20 px-2 sm:px-10 pointer-events-auto shrink-0 overflow-clip bg-black'>
     <div class='flex flex-wrap pt-5'>
       <div class='grid items-center min-w-44 flex-1 md:basis-auto md:w-1/4 p-2'>
@@ -334,9 +335,7 @@
         </button>
       {/each}
     </div>
-    
   </div>
-  
   <div class='flex flex-wrap md:px-7 justify-center pointer-events-auto'>
     {#each media as query, i (i)}
       {#if trace}
